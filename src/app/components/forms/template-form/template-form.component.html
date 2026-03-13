@@ -1,21 +1,29 @@
 <div class="container">
     <h2>User Form</h2>
-    <form class="row g-3 needs-validation" >
+    <form #form="ngForm" class="row g-3 needs-validation" >
   <div class="col-md-4">
-    <label >First name</label>
-    <input type="text" name="firstName" [(ngModel)]="userObj.firstName" class="form-control" >
-    
+    <label >First name <span class="text-danger"> *</span> </label>
+    <input type="text" name="firstName" required #fname="ngModel" [(ngModel)]="userObj.firstName" class="form-control" >
+    <div class="text-danger">
+      @if (fname.errors?.['required'] && fname.touched && fname.dirty) {
+        <span>Firstname is Required</span>
+      }
+      
+    </div>
   </div>
   <div class="col-md-4">
     <label>Last name</label>
-    <input type="text" name="lastName" [(ngModel)]="userObj.lastName" class="form-control" >
-    
+    <input type="text" name="lastName" required minlength="4" #lname="ngModel" [(ngModel)]="userObj.lastName" class="form-control" >
+    <div class="text-danger">
+      <span *ngIf="lname.errors?.['required'] && lname.touched">Lastname is required</span>
+      <span *ngIf="lname.errors?.['minlength'] && lname.touched">Minlength 4 required</span>
+    </div>
   </div>
   <div class="col-md-4">
     <label >Username</label>
     <div class="input-group has-validation">
       <span class="input-group-text" id="inputGroupPrepend">&#64;</span>
-      <input type="text" name="userName" [(ngModel)]="userObj.userName" class="form-control"  aria-describedby="inputGroupPrepend" >
+      <input type="text" name="userName" #username="ngModel" [(ngModel)]="userObj.userName" class="form-control"  aria-describedby="inputGroupPrepend" >
       
     </div>
   </div>
@@ -50,7 +58,7 @@
     </div>
   </div>
   <div class="col-12">
-    <button class="btn btn-primary" type="button" (click)="onSave()">Submit form</button>
+    <button class="btn btn-primary" [disabled]="form.invalid" type="button" (click)="onSave()">Submit form</button>
   </div>
 </form>
 
