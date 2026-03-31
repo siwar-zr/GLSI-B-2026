@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './post-api.component.html',
   styleUrl: './post-api.component.css'
 })
-export class PostApiComponent {
+export class PostApiComponent implements OnInit,AfterViewInit {
 
   http = inject(HttpClient);
   carList: any[] = [];
@@ -22,6 +22,19 @@ export class PostApiComponent {
   "carImage": "",
   "regNo": ""
 }
+
+  firstName: string;
+  constructor(){
+    this.firstName = '';
+  }
+
+  ngOnInit(): void {
+    this.getAllCars();
+  }
+
+  ngAfterViewInit(): void {
+    console.log("After View Init", performance.now())
+  }
 
   getAllCars(){
     this.http.get("https://freeapi.miniprojectideas.com/api/CarRentalApp/GetCars").subscribe((res:any) => {
