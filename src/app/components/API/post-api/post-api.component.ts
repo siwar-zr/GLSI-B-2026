@@ -1,35 +1,35 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TabsComponent } from "../../../reusable/tabs/tabs.component";
+import { Car, ICarList } from '../../../model/Car';
 
 @Component({
   selector: 'app-post-api',
-  imports: [FormsModule],
+  imports: [FormsModule, TabsComponent],
   templateUrl: './post-api.component.html',
   styleUrl: './post-api.component.css'
 })
 export class PostApiComponent implements OnInit,AfterViewInit {
 
   http = inject(HttpClient);
-  carList: any[] = [];
-  carObj: any = {
-  "carId": 0,
-  "brand": "",
-  "model": "",
-  "year": "",
-  "color": "",
-  "dailyRate": "",
-  "carImage": "",
-  "regNo": ""
-}
+  carList: ICarList[] = [];
+  carObj: Car = new Car();
 
   firstName: string;
+  currentTab: string = '';
+
   constructor(){
     this.firstName = '';
   }
 
   ngOnInit(): void {
     this.getAllCars();
+  }
+
+  onTabChange(tabName: string){
+    debugger;
+    this.currentTab = tabName;
   }
 
   ngAfterViewInit(): void {
@@ -49,6 +49,7 @@ export class PostApiComponent implements OnInit,AfterViewInit {
       if(res.result) {
         alert("Car created successfully !");
         this.getAllCars();
+        this.carObj = new Car();
       } else {
         alert(res.message)
       }

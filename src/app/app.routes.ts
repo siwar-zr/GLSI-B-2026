@@ -13,68 +13,84 @@ import { GetApiComponent } from './components/API/get-api/get-api.component';
 import { PostApiComponent } from './components/API/post-api/post-api.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { LifeCycleComponent } from './components/life-cycle/life-cycle.component';
+import { LoginComponent } from './components/login/login.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
     {
-        path:'',
-        redirectTo:'dataBinding',
-        pathMatch:'full'
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
     },
     {
-        path:'admin',
-        component: AdminComponent
+        path: 'login',
+        component: LoginComponent
     },
     {
-        path:'dataBinding',
-        component: DataBindingComponent
-    },
-    {
-        path:'ng-class',
-        component: NgClassComponent
-    },
-    {
-        path:'ng-for',
-        component: NgForComponent
+        path: '',
+        component: LayoutComponent,
+        canActivate: [authGuard],
+        children: [
+            {
+                path: 'admin',
+                component: AdminComponent
+            },
+            {
+                path: 'dataBinding',
+                component: DataBindingComponent
+            },
+            {
+                path: 'ng-class',
+                component: NgClassComponent
+            },
+            {
+                path: 'ng-for',
+                component: NgForComponent
+            }
+            ,
+            {
+                path: 'ng-if',
+                component: NgIfComponent
+            },
+            {
+                path: 'ng-style',
+                component: NgStyleComponent
+            },
+            {
+                path: 'user',
+                component: UserComponent
+            },
+            {
+                path: 'control',
+                component: ControlStatementComponent
+            },
+            {
+                path: 'template-form',
+                component: TemplateFormComponent
+            },
+            {
+                path: 'reactive-form',
+                component: ReactiveFormComponent
+            },
+            {
+                path: 'get-api',
+                component: GetApiComponent
+            },
+            {
+                path: 'post-api',
+                component: PostApiComponent
+            },
+            {
+                path: 'customer',
+                component: CustomerComponent
+            },
+            {
+                path: 'life-cycle',
+                component: LifeCycleComponent
+            }
+
+        ]
     }
-    ,
-    {
-        path:'ng-if',
-        component: NgIfComponent
-    },
-    {
-        path:'ng-style',
-        component: NgStyleComponent
-    },
-    {
-        path:'user',
-        component: UserComponent
-    },
-    {
-        path:'control',
-        component: ControlStatementComponent
-    },
-    {
-        path:'template-form',
-        component: TemplateFormComponent
-    },
-    {
-        path:'reactive-form',
-        component: ReactiveFormComponent
-    },
-    {
-        path:'get-api',
-        component: GetApiComponent
-    },
-    {
-        path:'post-api',
-        component: PostApiComponent
-    },
-    {
-        path:'customer',
-        component: CustomerComponent
-    },
-    {
-        path:'life-cycle',
-        component: LifeCycleComponent
-    }
+
 ];
