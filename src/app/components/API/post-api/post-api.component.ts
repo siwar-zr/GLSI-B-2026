@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TabsComponent } from "../../../reusable/tabs/tabs.component";
 import { Car, ICarList } from '../../../model/Car';
@@ -16,6 +16,9 @@ export class PostApiComponent implements OnInit,AfterViewInit {
   carList: ICarList[] = [];
   carObj: Car = new Car();
 
+  @ViewChild('txtCity') cityTextbox : ElementRef | undefined;
+  @ViewChild(TabsComponent) myTabViewChild : TabsComponent | undefined;
+
   firstName: string;
   currentTab: string = '';
 
@@ -25,6 +28,15 @@ export class PostApiComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     this.getAllCars();
+  }
+
+  readCity(){
+    debugger;
+    const city = this.cityTextbox?.nativeElement.value;
+    if(this.cityTextbox){
+      this.cityTextbox.nativeElement.style.color = "red";
+    }
+    const val = this.myTabViewChild?.currentTab; 
   }
 
   onTabChange(tabName: string){
